@@ -1,20 +1,15 @@
 #include <iostream>
-#include "registro.cpp"
+#include "funciones.cpp"
 using namespace std;
 
 int menu();
-void mostrarDatos();
-void registroPagos();
-void sistmultas();
-void codigoPrincipal();
-void registroDatos();
 
 int menu(){
     int opcion;
     cout << "1. Registro de datos\n";
     cout << "2. Registro de pagos\n";
     cout << "3. Sistema de multas\n";
-    cout << "4. Mostrar datos\n";
+    cout << "4. Datos residente\n";
     cout << "5. Salir\n";
     cout << "Opcion: ";
     cin >> opcion;
@@ -31,14 +26,8 @@ void codigoPrincipal(){
         case 1:
             registroDatos();
             break;
-        case 2:
-            registroPagos();
-            break;
-        case 3:
-            sistmultas();
-            break;
         case 4:
-            mostrarDatos();
+            searchUser();
             break;
         case 5:
             cout << "Saliendo del sistema\n";
