@@ -26,6 +26,9 @@ void codigoPrincipal(){
         case 1:
             registroDatos();
             break;
+        case 2:
+            registroPagos();
+            break;
         case 4:
             searchUser();
             break;

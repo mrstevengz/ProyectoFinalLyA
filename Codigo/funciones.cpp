@@ -73,3 +73,85 @@ void searchUser(){
     showData(d);
     
 }
+
+Registro regispagos[MAX_REG];
+#define precio[80];
+precio i = 0;
+int pos = 0;
+int obtPos(int id);
+void agregarPago();
+void registroPagos();
+void mostrarPagos();
+void showPagos(Registro &d);
+void searchPagos();
+Registro search(int id);
+
+void agregarPago(Registro *d){
+    regispagos[pos] = *d;
+    pos ++;
+}
+
+void showPagos(Registro &d){
+    int id;
+    cout << "Introduce el ID del residente: ";
+    cin >> id;
+    Usuario d = search(id);
+    showData(d);
+    for (int i = 0; i < pos; i++)
+    {
+       showData(usuariodatos[i]);
+    }
+    cout << "No existe en el registro de usuarios";
+}
+
+void registroPagos(){
+    Usuario usuariodatos;
+
+    cout << "Por favor, introduce tu numero de casa: ";
+    cin >> usuariodatos.id;
+
+    cout << "Por favor, introduce tu nombre: ";
+    scanf(" %[^\n]", usuariodatos.nombre);
+
+    cout << "Por favor, introduce tus apellidos: ";
+    scanf(" %[^\n]", usuariodatos.apellidos);
+
+    cout << "Por favor agrega el saldo a pagar: ";
+    scanf(" %[^\n]", precio[80]);
+    precio i = 80;
+    if (precio i < 80){
+        cout << "Falta en el pago de cuidado" << endl;
+    }
+
+    agregarUsuario(&usuariodatos);
+    cout << "\n Pago agregado al registro \n";
+}
+
+void mostrarPagos(){
+    for (int i = 0; i < pos; i++)
+    {
+       showPagos(regispagos[i]);
+    }
+    cout << "\n";
+}
+
+Registro search(int id){
+    for (int i = 0; i < pos; i++)
+    {
+        if (regispagos[i].id == id)
+        {
+            return regispagos[i];
+        }
+    }
+}
+
+void searchPagos(){
+    int id;
+    cout << "Introduce el ID del residente: ";
+    cin >> id;
+    Usuario d = search(id);
+    showPagos(d);  
+}
+
+
+
