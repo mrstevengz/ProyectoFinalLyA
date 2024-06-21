@@ -5,4 +5,7 @@ typedef struct Usuario{
     char nombre[50];
     char apellidos[50];
     char telefono[50];
+    char cedula[50];
+    char pagos[100];
+    char fecha[50];
 };
