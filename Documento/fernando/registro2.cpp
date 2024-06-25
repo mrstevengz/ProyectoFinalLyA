@@ -231,8 +231,4 @@ void eliminarDatos()
     cout << "Registro eliminado...\n";
 }
 
-int main()
-{
-    principal();
-    return 0;
-}
+
