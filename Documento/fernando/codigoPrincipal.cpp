@@ -383,7 +383,9 @@ void cargarDeFichero(){
     if (archivo.is_open()){
         pos = 0;
         while (!archivo.eof() && pos < MAX_REG){
-            archivo >> personas[pos].id;
+            int id;
+            archivo >> id;
+            if (archivo.fail()) break; // Detener si no se puede leer el id
             archivo.ignore();
             archivo.getline(personas[pos].nombre, 50);
             archivo.getline(personas[pos].apellidos, 50);
@@ -391,6 +393,7 @@ void cargarDeFichero(){
             archivo.getline(personas[pos].numeroTelefono, 20);
             archivo.getline(personas[pos].numeroCasa, 10);
             archivo.getline(personas[pos].pago, MAX_REG);
+            personas[pos].id = id; // Asignar el id después de leer todos los datos
             pos++;
         }
         archivo.close();
@@ -408,7 +411,3 @@ int main()
     guardarEnFichero();  // Guardar los datos en el fichero al final
     return 0;
 }
-
-
-
-
