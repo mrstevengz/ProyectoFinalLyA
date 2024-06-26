@@ -1,6 +1,7 @@
 #include <iostream>
-#include <string>
+#include <string.h>
 #include "variables.h"
+#include <locale.h>
 
 Usuario usuariodatos[MAX_REG];
 Usuario regpagos[MAX_REG];
@@ -9,13 +10,19 @@ int pos = 0;
 int obtPos(int id);
 void agregarUsuario();
 void registroDatos();
-void mostrarDatos();
 void showData(Usuario &d);
-void showPayments(Usuario &p);
+void editar(Usuario *p, int id);
 void searchUser();
+void eliminar(int id);
+void editarDatos();
+void eliminarDatos();
+void mostrarDatos();
+
+
+
+void showPayments(Usuario &p);
 void registroPagos();
 void agregarPago();
-void eliminar(int id);
 void eliminarPagos();
 Usuario search(int id);
 
@@ -88,6 +95,62 @@ void searchUser(){
     
 }
 
+void eliminar(int id)
+{
+    int posi = obtPos(id);
+    for (int i = posi; i < pos - 1; i++)
+    {
+        usuariodatos[i] = usuariodatos[i + 1];
+    }
+    pos--;
+}
+
+void eliminarDatos(){
+    int id;
+    cout << "ID de la persona a eliminar: ";
+    cin >> id;
+    if (obtPos(id) == -1)
+    {
+        cout << "Registro no encontrado\n";
+        return;
+    }
+    eliminar(id);
+    cout << "Registro eliminado...\n";
+}
+
+void editar(Usuario *p, int id){
+    int posi = obtPos(id);
+    strcpy(usuariodatos[posi].nombre, p->nombre);
+    strcpy(usuariodatos[posi].apellidos, p->apellidos);
+    strcpy(usuariodatos[posi].telefono, p->telefono);
+    strcpy(usuariodatos[posi].cedula, p->cedula);
+}
+
+void editarDatos(){
+    int id;
+    cout << "ID de la persona a editar: ";
+    cin >> id;
+    if (obtPos(id) == -1)
+    {
+        cout << "Registro no encontrado\n";
+        return;
+    }
+    Usuario p = search(id);
+    cout << "Datos actuales:\n";
+    showData(p);
+    cout << "Nombre: ";
+    cin.ignore();
+    cin.getline(p.nombre, 50);
+    cout << "Apellidos: ";
+    cin.getline(p.apellidos, 50);
+    cout << "Telefono: ";
+    cin.getline(p.telefono, 20);
+    cout << "Cedula: ";
+    cin.getline(p.cedula, 20);
+    editar(&p, id);
+    cout << "Registro actualizado...\n";
+
+}
 //*Funcion de registro de pagos
 
 void agregarPago(Usuario *p)

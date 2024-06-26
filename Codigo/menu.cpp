@@ -4,14 +4,14 @@ using namespace std;
 
 int menu();
 int menu2();
+int menu3();
 
 int menu(){
     int opcion;
-    cout << "1. Registro de datos\n";
+    cout << "1. Menu de registro de datos\n";
     cout << "2. Menu de pagos\n";
     cout << "3. Sistema de multas\n";
-    cout << "4. Datos residentes\n";
-    cout << "5. Salir\n";
+    cout << "4. Salir\n";
     cout << "Opcion: ";
     cin >> opcion;
     return opcion;
@@ -28,6 +28,16 @@ int menu2(){
     return opcion;
 }
 
+int menu3(){
+    int opcion;
+    cout << "1. Agregar\n";
+    cout << "2. Mostrar\n";
+    cout << "3. Eliminar\n";
+    
+}
+void menuRegistro(){
+
+}
 void menuPagos(){
     int opcion;
     do
