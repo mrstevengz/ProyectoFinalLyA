@@ -76,7 +76,6 @@ void editar(PERSONA *p, int id)
     strcpy(personas[posi].numeroCedula, p->numeroCedula);
     strcpy(personas[posi].numeroTelefono, p->numeroTelefono);
     strcpy(personas[posi].numeroCasa, p->numeroCasa);
-    strcpy(personas[posi].pago, p->pago);
 }
 
 void eliminar(int id)
@@ -318,7 +317,7 @@ void editarDatos()
     cout << "Numero de casa: ";
     cin.getline(p.numeroCasa, 10);
     cout << "Pago: ";
-    cin.getline(p.pago, MAX_REG);
+    cin.getline(p.pago, 20);
     editar(&p, id);
     cout << "Registro actualizado...\n";
 }
@@ -351,7 +350,10 @@ void registroPago(){
     }
     cout << "Pago: ";
     cin.ignore();
-    cin.getline(b.pago, MAX_REG);
+    cin.getline(b.pago, 20);
+    cout << "Fecha limite (dd/mm/aa): ";
+    cin.ignore();
+    cin.getline(b.fecha, 20);
     agregarPago(b);
     cout << "Pago registrado...\n";
 
@@ -363,6 +365,7 @@ void agregarPago(PERSONA &b){
         if (personas[i].id == b.id)
         {
             strcpy(personas[i].pago, b.pago);
+            strcpy(personas[i].fecha, b.fecha);
             break;
         }
     }
@@ -370,11 +373,21 @@ void agregarPago(PERSONA &b){
 
 void eliminarPagos(){
     int id;
-    cout << "Elimina un pago\n";
-    cout << "ID: ";
+    cout << "ID del residente al que deseas eliminar el pago: ";
     cin >> id;
-    eliminar(id);
+    for (int i = 0; i < pos; i++)
+    {
+        if (personas[i].id == id)
+        {
+            strcpy(personas[i].pago, "");
+            strcpy(personas[i].fecha, "");
+            cout << "Pago eliminado...\n";
+            return;
+        }
+    }
+    cout << "No se encontro el registro\n";
 }
+
 
 PERSONA BUSCAR(int id)
 {
@@ -396,6 +409,7 @@ void buscarPago(){
     cout << "ID: " << b.id << endl;
     cout << "Nombre: " << b.nombre << endl;
     cout << "Pago pendiente: " << b.pago << endl;
+    cout << "Fecha limite: " << b.fecha << endl;
     cout << "=====================\n";
     cout << "\n";
 }
@@ -412,6 +426,7 @@ void guardarEnFichero(){
             archivo << personas[i].numeroTelefono << "\n";
             archivo << personas[i].numeroCasa << "\n";
             archivo << personas[i].pago << "\n";
+            archivo << personas[i].fecha << "\n";
         }
         archivo.close();
         cout << "Datos guardados en fichero.\n";
@@ -427,15 +442,16 @@ void cargarDeFichero(){
         while (!archivo.eof() && pos < MAX_REG){
             int id;
             archivo >> id;
-            if (archivo.fail()) break; // Detener si no se puede leer el id
+            if (archivo.fail()) break; 
             archivo.ignore();
             archivo.getline(personas[pos].nombre, 50);
             archivo.getline(personas[pos].apellidos, 50);
             archivo.getline(personas[pos].numeroCedula, 20);
             archivo.getline(personas[pos].numeroTelefono, 20);
             archivo.getline(personas[pos].numeroCasa, 10);
-            archivo.getline(personas[pos].pago, MAX_REG);
-            personas[pos].id = id; // Asignar el id después de leer todos los datos
+            archivo.getline(personas[pos].pago, 20);
+            archivo.getline(personas[pos].fecha, 20);
+            personas[pos].id = id; 
             pos++;
         }
         archivo.close();
