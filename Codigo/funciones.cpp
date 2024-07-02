@@ -23,7 +23,9 @@ void buscarPorID();
 void editarDatos();
 void eliminarDatos();
 int menu2();
+int menu3();
 void menupagos();
+void menuprincipal();
 
 void registroPago();
 void agregarPago(PERSONA &b);
@@ -49,9 +51,7 @@ PERSONA buscar(int id)
         {
             return personas[i];
         }
-        
     }
-
     PERSONA p;
     return p;
 }
@@ -76,7 +76,6 @@ void editar(PERSONA *p, int id)
     strcpy(personas[posi].numeroCedula, p->numeroCedula);
     strcpy(personas[posi].numeroTelefono, p->numeroTelefono);
     strcpy(personas[posi].numeroCasa, p->numeroCasa);
-    strcpy(personas[posi].pago, p->pago);
 }
 
 void eliminar(int id)
@@ -89,39 +88,81 @@ void eliminar(int id)
     pos--;
 }
 
-int menu()
-{
+int menu(){
     int op;
+    cout << " \nBienvenido al sistema de cobro seguridad!" << endl;
+    cout << "1. Menu de registro de datos\n";
+    cout << "2. Menu de pagos\n";
+    cout << "3. Guardar informacion\n";
+    cout << "4. Salir\n";
+    cout << "Digite la opcion: ";
+    cin >> op;
+    system("cls");
+    return op;
+}
+
+int menu2()
+{
+    int op2;
+    cout << "Menu de registro de datos\n";
     cout << "1. Agregar\n";
     cout << "2. Editar\n";
     cout << "3. Eliminar\n";
     cout << "4. Buscar\n";
     cout << "5. Mostrar todo\n";
-    cout << "6. Menu de pagos\n";
-    cout << "7. Salir\n";
+    cout << "6. Salir\n";
     cout << "Digite la opcion: ";
-    cin >> op;
-    return op;
+    cin >> op2;
+    system("cls");
+    return op2;
 }
 
-int menu2(){
-    int op2;
+int menu3(){
+    int op3;
+    cout << "Menu de pagos\n";
     cout << "1. Agregar Pago\n";
     cout << "2. Mostrar pagos pendientes\n";
     cout << "3. Eliminar pagos\n";
     cout << "4. Salir del menu\n";
     cout << "Digite la opcion: ";
-    cin >> op2;
-    return op2;
+    cin >> op3;
+    system("cls");
+    return op3;
 }
 
-void principal()
-{
+void principal(){
     int op;
     do
     {
         op = menu();
         switch (op)
+        {
+        case 1:
+            menuprincipal();
+            break;
+        case 2:
+            menupagos();
+            break;
+        case 3:
+            guardarEnFichero();
+            break;
+        case 4:
+            cout << "Saliendo del sistema\n";
+            break;
+        default:
+            cout << "Opcion no valida\n";
+            break;
+        }
+    } while (op != 4);
+}
+
+void menuprincipal()
+{
+    int op2;
+    do
+    {
+        op2 = menu2();
+        switch (op2)
         {
         case 1:
             pedirDatos();
@@ -138,27 +179,23 @@ void principal()
         case 5:
             mostrarDatos();
             break;
-        case 6:
-            menupagos();
             break;
-        case 7:
-            cout << "Saliendo del sistema\n";
+        case 6:
+            cout << "Regresando al menu\n";
             break;
         default:
-            cout << "Opcion no valida\n";
-            cout << endl;
+            cout << "Error // Opcion no valida\n";
             break;
         }
-    } while (op != 7);
+    } while (op2 != 6);
 }
 
 void menupagos(){
-    int op2;
-    cout << endl;
+    int op3;
     do
     {
-        op2 = menu2();
-        switch (op2)
+        op3 = menu3();
+        switch (op3)
         {
         case 1:
             registroPago();
@@ -170,29 +207,25 @@ void menupagos(){
             eliminarPagos();
             break;
         case 4:
-            cout << "Regresando al menu anterior\n";
-            cout << endl;
+            cout << "Regresando al menu\n";
             break;
         default:
-            cout << "Opcion no valida\n";
-            cout << endl; 
+            cout << "Error // Opcion no valida\n";
             break;
         }
-    } while (op2 != 4);
+    } while (op3 != 4);
 
 }
 
 void pedirDatos()
 {
     PERSONA persona;
-    cout << endl;
     cout << "Datos de la persona\n";
     cout << "ID: ";
     cin >> persona.id;
     if (obtPos(persona.id) != -1)
     {
         cout << "Ya existe un registro con este ID\n";
-        cout << endl;
         return;
     }
     cout << "Nombre: ";
@@ -208,7 +241,6 @@ void pedirDatos()
     cin.getline(persona.numeroCasa, 10);
     agregar(&persona);
     cout << "Registro agregado...\n";
-    cout << endl;
 }
 
 void mostrarDatos()
@@ -227,19 +259,16 @@ void mostrarDatos()
 void buscarPorID()
 {
     int id;
-    cout << endl;
     cout << "ID de la persona a buscar: ";
     cin >> id;
     PERSONA p = buscar(id);
     if (obtPos(id) == -1)
     {
         cout << "Registro no encontrado\n";
-        cout << endl;
         return;
     }
     showData(p);
-    cout << endl;
-}
+    }
 
 void showData(PERSONA &p)
 {
@@ -250,27 +279,30 @@ void showData(PERSONA &p)
     cout << "Numero de cedula: " << p.numeroCedula << endl;
     cout << "Numero de telefono: " << p.numeroTelefono << endl;
     cout << "Numero de casa: " << p.numeroCasa << endl;
-    cout << "Pago: " << p.pago << endl;
+    if (p.pago > 0)
+    {
+        cout << "Pago: " << p.pago << endl;
+    }
+    else
+    {
+        cout << "No hay pagos pendientes\n";
+    }
     cout << "==================\n";
 }
 
 void editarDatos()
 {
     int id;
-    cout << endl;
     cout << "ID de la persona a editar: ";
     cin >> id;
     if (obtPos(id) == -1)
     {
         cout << "Registro no encontrado\n";
-        cout << endl;
         return;
     }
     PERSONA p = buscar(id);
     cout << "Datos actuales:\n";
     showData(p);
-    cout << endl;
-    cout <<"Datos nuevos: " << endl;
     cout << "Nombre: ";
     cin.ignore();
     cin.getline(p.nombre, 50);
@@ -283,48 +315,45 @@ void editarDatos()
     cout << "Numero de casa: ";
     cin.getline(p.numeroCasa, 10);
     cout << "Pago: ";
-    cin.getline(p.pago, MAX_REG);
+    cin.getline(p.pago, 20);
     editar(&p, id);
     cout << "Registro actualizado...\n";
-    cout << endl;
 }
 
 void eliminarDatos()
 {
     int id;
-    cout << endl;
+    mostrarDatos();
     cout << "ID de la persona a eliminar: ";
     cin >> id;
     if (obtPos(id) == -1)
     {
         cout << "Registro no encontrado\n";
-        cout << endl;
         return;
     }
     eliminar(id);
     cout << "Registro eliminado...\n";
-    cout << endl;
 }
 
-
+// Pagos
 void registroPago(){
     PERSONA b;
-    cout << endl;
     cout << "Registro de pagos\n";
     cout << "ID: ";
     cin >> b.id;
     if (obtPos(b.id) == -1)
     {
         cout << "No existe un registro de residente con este ID\n";
-        cout << endl;
         return;
     }
     cout << "Pago: ";
     cin.ignore();
-    cin.getline(b.pago, MAX_REG);
+    cin.getline(b.pago, 20);
+    cout << "Fecha limite (dd/mm/aa): ";
+    cin.ignore();
+    cin.getline(b.fecha, 20);
     agregarPago(b);
     cout << "Pago registrado...\n";
-    cout << endl;
 
 }
 
@@ -334,6 +363,7 @@ void agregarPago(PERSONA &b){
         if (personas[i].id == b.id)
         {
             strcpy(personas[i].pago, b.pago);
+            strcpy(personas[i].fecha, b.fecha);
             break;
         }
     }
@@ -341,20 +371,26 @@ void agregarPago(PERSONA &b){
 
 void eliminarPagos(){
     int id;
-    cout << endl;
-    cout << "Elimina un pago\n";
-    cout << "ID: ";
+    cout << "ID del residente al que deseas eliminar el pago: ";
     cin >> id;
-     if (obtPos(id) == -1)
+    if (obtPos(id) == -1)
     {
-        cout << "No existe un registro de residente con este ID\n";
-        cout << endl;
+        cout << "Registro no encontrado\n";
         return;
     }
-    eliminar(id);
-    cout <<"Pago eliminado." << endl;
-    cout << endl; 
+    for (int i = 0; i < pos; i++)
+    {
+        if (personas[i].id == id)
+        {
+            strcpy(personas[i].pago, "");
+            strcpy(personas[i].fecha, "");
+            cout << "Pago eliminado...\n";
+            return;
+        }
+    }
+    cout << "No se encontro el registro\n";
 }
+
 
 PERSONA BUSCAR(int id)
 {
@@ -369,13 +405,11 @@ PERSONA BUSCAR(int id)
 
 void buscarPago(){
     int id;
-    cout << endl;
     cout << "Introduce el ID del residente al que deseas buscar: ";
     cin >> id;
-     if (obtPos(id) == -1)
+    if (obtPos(id) == -1)
     {
         cout << "Registro no encontrado\n";
-        cout << endl;
         return;
     }
     PERSONA b = BUSCAR(id);
@@ -383,6 +417,7 @@ void buscarPago(){
     cout << "ID: " << b.id << endl;
     cout << "Nombre: " << b.nombre << endl;
     cout << "Pago pendiente: " << b.pago << endl;
+    cout << "Fecha limite: " << b.fecha << endl;
     cout << "=====================\n";
     cout << "\n";
 }
@@ -399,6 +434,7 @@ void guardarEnFichero(){
             archivo << personas[i].numeroTelefono << "\n";
             archivo << personas[i].numeroCasa << "\n";
             archivo << personas[i].pago << "\n";
+            archivo << personas[i].fecha << "\n";
         }
         archivo.close();
         cout << "Datos guardados en fichero.\n";
@@ -414,15 +450,16 @@ void cargarDeFichero(){
         while (!archivo.eof() && pos < MAX_REG){
             int id;
             archivo >> id;
-            if (archivo.fail()) break; // Detener si no se puede leer el id
+            if (archivo.fail()) break; 
             archivo.ignore();
             archivo.getline(personas[pos].nombre, 50);
             archivo.getline(personas[pos].apellidos, 50);
             archivo.getline(personas[pos].numeroCedula, 20);
             archivo.getline(personas[pos].numeroTelefono, 20);
             archivo.getline(personas[pos].numeroCasa, 10);
-            archivo.getline(personas[pos].pago, MAX_REG);
-            personas[pos].id = id; // Asignar el id después de leer todos los datos
+            archivo.getline(personas[pos].pago, 20);
+            archivo.getline(personas[pos].fecha, 20);
+            personas[pos].id = id; 
             pos++;
         }
         archivo.close();
@@ -431,4 +468,3 @@ void cargarDeFichero(){
         cout << "No se pudo abrir el fichero.\n";
     }
 }
-

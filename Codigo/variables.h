@@ -9,7 +9,7 @@ struct PERSONA {
     char telefono[50];
     char cedula[50];
     char pagos[100];
-    char fecha[50];
+    char fecha[100];
     char numeroCedula[20];
     char numeroTelefono[20];
     char numeroCasa[10];
