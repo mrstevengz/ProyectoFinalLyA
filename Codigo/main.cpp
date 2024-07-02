@@ -7,8 +7,8 @@
 int main()
 {
     setlocale(LC_ALL, "");
-    cargarDeFichero();  // Cargar los datos del fichero al inicio
+    cargarDeFichero();  
     principal();
-    guardarEnFichero();  // Guardar los datos en el fichero al final
+    guardarEnFichero();  
     return 0;
 }

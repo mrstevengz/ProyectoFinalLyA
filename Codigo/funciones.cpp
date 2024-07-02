@@ -23,7 +23,9 @@ void buscarPorID();
 void editarDatos();
 void eliminarDatos();
 int menu2();
+int menu3();
 void menupagos();
+void menuprincipal();
 
 void registroPago();
 void agregarPago(PERSONA &b);
@@ -87,41 +89,81 @@ void eliminar(int id)
     pos--;
 }
 
-int menu()
-{
+int menu(){
     int op;
+    cout << " \nBienvenido al sistema de cobro seguridad!" << endl;
+    cout << "1. Menu de registro de datos\n";
+    cout << "2. Menu de pagos\n";
+    cout << "3. Guardar informacion\n";
+    cout << "4. Salir\n";
+    cout << "Digite la opcion: ";
+    cin >> op;
+    system("cls");
+    return op;
+}
+
+int menu2()
+{
+    int op2;
+    cout << "Menu de registro de datos\n";
     cout << "1. Agregar\n";
     cout << "2. Editar\n";
     cout << "3. Eliminar\n";
     cout << "4. Buscar\n";
     cout << "5. Mostrar todo\n";
-    cout << "6. Menu de pagos\n";
-    cout << "7. Guardar en fichero\n";
-    cout << "8. Cargar de fichero\n";
-    cout << "9. Salir\n";
+    cout << "6. Salir\n";
     cout << "Digite la opcion: ";
-    cin >> op;
-    return op;
+    cin >> op2;
+    system("cls");
+    return op2;
 }
 
-int menu2(){
-    int op2;
+int menu3(){
+    int op3;
+    cout << "Menu de pagos\n";
     cout << "1. Agregar Pago\n";
     cout << "2. Mostrar pagos pendientes\n";
     cout << "3. Eliminar pagos\n";
     cout << "4. Salir del menu\n";
     cout << "Digite la opcion: ";
-    cin >> op2;
-    return op2;
+    cin >> op3;
+    system("cls");
+    return op3;
 }
 
-void principal()
-{
+void principal(){
     int op;
     do
     {
         op = menu();
         switch (op)
+        {
+        case 1:
+            menuprincipal();
+            break;
+        case 2:
+            menupagos();
+            break;
+        case 3:
+            guardarEnFichero();
+            break;
+        case 4:
+            cout << "Saliendo del sistema\n";
+            break;
+        default:
+            cout << "Opcion no valida\n";
+            break;
+        }
+    } while (op != 4);
+}
+
+void menuprincipal()
+{
+    int op2;
+    do
+    {
+        op2 = menu2();
+        switch (op2)
         {
         case 1:
             pedirDatos();
@@ -138,31 +180,23 @@ void principal()
         case 5:
             mostrarDatos();
             break;
+            break;
         case 6:
-            menupagos();
-            break;
-        case 7:
-            guardarEnFichero();
-            break;
-        case 8:
-            cargarDeFichero();
-            break;
-        case 9:
-            cout << "Saliendo del sistema\n";
+            cout << "Regresando al menu\n";
             break;
         default:
-            cout << "Opcion no valida\n";
+            cout << "Error // Opcion no valida\n";
             break;
         }
-    } while (op != 9);
+    } while (op2 != 6);
 }
 
 void menupagos(){
-    int op2;
+    int op3;
     do
     {
-        op2 = menu2();
-        switch (op2)
+        op3 = menu3();
+        switch (op3)
         {
         case 1:
             registroPago();
@@ -174,13 +208,13 @@ void menupagos(){
             eliminarPagos();
             break;
         case 4:
-            cout << "Regresando al menu anterior\n";
+            cout << "Regresando al menu\n";
             break;
         default:
-            cout << "Opcion no valida\n";
+            cout << "Error // Opcion no valida\n";
             break;
         }
-    } while (op2 != 4);
+    } while (op3 != 4);
 
 }
 
@@ -248,7 +282,14 @@ void showData(PERSONA &p)
     cout << "Numero de cedula: " << p.numeroCedula << endl;
     cout << "Numero de telefono: " << p.numeroTelefono << endl;
     cout << "Numero de casa: " << p.numeroCasa << endl;
-    cout << "Pago: " << p.pago << endl;
+    if (p.pago > 0)
+    {
+        cout << "Pago: " << p.pago << endl;
+    }
+    else
+    {
+        cout << "No hay pagos pendientes\n";
+    }
     cout << "==================\n";
 }
 
@@ -285,6 +326,7 @@ void editarDatos()
 void eliminarDatos()
 {
     int id;
+    mostrarDatos();
     cout << "ID de la persona a eliminar: ";
     cin >> id;
     if (obtPos(id) == -1)
@@ -402,4 +444,3 @@ void cargarDeFichero(){
         cout << "No se pudo abrir el fichero.\n";
     }
 }
-
