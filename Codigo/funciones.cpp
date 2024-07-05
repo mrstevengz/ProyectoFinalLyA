@@ -222,7 +222,7 @@ void pedirDatos()
     PERSONA persona;
     cout << "Datos de la persona\n";
     cout << "ID: ";
-    cin >> persona.id;
+    scanf("%d", &persona.id);
     if (obtPos(persona.id) != -1)
     {
         cout << "Ya existe un registro con este ID\n";
@@ -341,7 +341,7 @@ void registroPago(){
     PERSONA b;
     cout << "Registro de pagos\n";
     cout << "ID: ";
-    cin >> b.id;
+    scanf("%d", &b.id);
     if (obtPos(b.id) == -1)
     {
         cout << "No existe un registro de residente con este ID\n";
