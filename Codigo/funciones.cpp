@@ -262,14 +262,13 @@ void buscarPorID()
     cout << "ID de la persona a buscar: ";
     cin >> id;
     PERSONA p = buscar(id);
-    if (p.id != 0)
-    {
-        showData(p);
-    }
-    else
+    if (obtPos(id) == -1)
     {
         cout << "Registro no encontrado\n";
-    }
+        return;}
+
+        showData(p);
+    
 }
 
 void showData(PERSONA &p)
@@ -375,6 +374,10 @@ void eliminarPagos(){
     int id;
     cout << "ID del residente al que deseas eliminar el pago: ";
     cin >> id;
+    if (obtPos(id) == -1)
+    {
+        cout << "Registro no encontrado\n";
+        return;}
     for (int i = 0; i < pos; i++)
     {
         if (personas[i].id == id)
@@ -385,7 +388,7 @@ void eliminarPagos(){
             return;
         }
     }
-    cout << "No se encontro el registro\n";
+    
 }
 
 
@@ -404,6 +407,11 @@ void buscarPago(){
     int id;
     cout << "Introduce el ID del residente al que deseas buscar: ";
     cin >> id;
+    if (obtPos(id) == -1)
+    {
+        cout << "Registro no encontrado\n";
+        return;}
+
     PERSONA b = BUSCAR(id);
     cout << "=====================\n";
     cout << "ID: " << b.id << endl;
