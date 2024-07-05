@@ -121,7 +121,7 @@ int menu3(){
     int op3;
     cout << "Menu de pagos\n";
     cout << "1. Agregar Pago\n";
-    cout << "2. Mostrar pagos pendientes\n";
+    cout << "2. Mostrar pagos de un residente\n";
     cout << "3. Eliminar pagos\n";
     cout << "4. Salir del menu\n";
     cout << "Digite la opcion: ";
